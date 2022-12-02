@@ -1,6 +1,7 @@
 {
     "name": "jmnn/location-ca",
     "description": "Location canada",
+    "version": "1.0.0",
     "type": "laravel",
     "autoload": {
         "psr-4": {
