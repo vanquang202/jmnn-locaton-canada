@@ -1,0 +1,27 @@
+{
+    "name": "jmnn/location-ca",
+    "description": "Location canada",
+    "type": "laravel",
+    "autoload": {
+        "psr-4": {
+            "Jmnn\\LocationCa\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "vanquang202",
+            "email": "quangvq@gmail.com"
+        }
+    ],
+    "require": {},
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Jmnn\\LocationCa\\LocationCanadaServiceProvider"
+            ],
+            "aliases": {
+                "JLocationCa" : "Jmnn\\LocationCa\\Facade\\LocationCanadaFacade"
+            }
+        }
+    }
+}
