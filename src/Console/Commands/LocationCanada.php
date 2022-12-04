@@ -14,37 +14,27 @@ class LocationCanada extends Command
     public function handle(JLocationCa $JLocationCa)
     {
         $result = [];
+        $str = 'Stony Plain, AB';
+        $data = $JLocationCa::build($str);
 
-        $data = $JLocationCa::build('32 ARBOR CR SE , Levis ,Quebec G6V 7N5 , Canada');
-
-        foreach ($data as $k => $s)
+        foreach ($data as $s)
         {
             $this->__createLine(...$s);
             array_push($result, $JLocationCa::searchData(...$s));
         }
-
         dd($result);
         return Command::SUCCESS;
     }
 
-    private function __createLine($address ,  $street , $nameLocation , $statePostal , $state , $postal)
+    private function __createLine($address = [null], $locationStreet = [null],  $street = [null], $nameLocation = [null], $statePostal = [null] , $state = [null], $postal = [null])
     {
+
         $this->line('<fg=black>Address : <fg=magenta>' . $address[0] );
+        $this->line('<fg=black>Location street : <fg=magenta>' . $locationStreet[0] );
         $this->line('<fg=black>Street : <fg=magenta>' . $street[0]);
         $this->line('<fg=black>Location name : <fg=magenta>' . $nameLocation[0]);
-        $this->line('<fg=black>State postal : <fg=magenta>' . $statePostal[0]);
         $this->line('<fg=black>State : <fg=magenta>' . $state[0]);
+        $this->line('<fg=black>State postal : <fg=magenta>' . $statePostal[0]);
         $this->line('<fg=black>Postal : <fg=magenta>' . $postal[0]);
-
-//        $this->line('
-//            <fg=black>Black
-//            <fg=red>Red
-//            <fg=green>Green
-//            <fg=yellow>Yellow
-//             <fg=blue>Blue
-//             <fg=magenta>Magenta
-//             <fg=cyan>Cyan
-//             <fg=white;bg=black>White
-//             <fg=default;bg=black>Default</>');
     }
 }

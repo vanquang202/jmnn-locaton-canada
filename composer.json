@@ -8,13 +8,17 @@
             "Jmnn\\LocationCa\\": "src/"
         }
     },
+    "autoload-dev" : {
+        "psr-4": {
+            "Jmnn\\LocationCa\\Tests\\": "tests"
+        }
+    },
     "authors": [
         {
             "name": "vanquang202",
             "email": "quangvq@gmail.com"
         }
     ],
-    "require": {},
     "extra": {
         "laravel": {
             "providers": [
@@ -24,5 +28,10 @@
                 "JLocationCa" : "Jmnn\\LocationCa\\Facade\\LocationCanadaFacade"
             }
         }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5",
+        "orchestra/testbench": "^7.15",
+        "nunomaduro/collision": "^6.3"
     }
 }

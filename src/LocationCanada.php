@@ -6,7 +6,18 @@ use Illuminate\Support\Facades\DB;
 
 class LocationCanada
 {
-    private $regex = "/(?i)([\p{L}\d\s?\,?]+?)\s?\,?([\p{L}+?\s?]+)?\,?\s?((SK|QC|ON|NS|NL|NB|MB|BC|AB|PE|YT|NU|NT|Québec|Quebec|Ontario|British Columbia|Montreal|Victoria|Saskatchewan|Calgary|Newfoundland|Nova Scotia|Alberta)([\s\w]+))\,?\s?(Canada)?/";
+    private $regex = "/(([a-z0-9A-Z_\x{00C0}-\x{00FF}\x{1EA0}-\x{1EFF}\d?\s?\,?]*?)\s?\,?+([\/?\(?\)?\"?\.?\'?\’?\-?\d?a-z0-9A-Z_\x{00C0}-\x{00FF}\x{1EA0}-\x{1EFF}+?\s?]+)?)?\,?\s?((SK|QC|ON|NS|NL|NB|MB|BC|AB|PE|YT|NU|NT|Québec|Saskatchewan|Quebec|Ontario|Nova Scotia|Newfoundland and Labrador|New Brunswick|Manitoba|British Columbia|Alberta|Prince Edward Island|Yukon|Nunavut|Northwest Territories)([\s\w]+)?)\,?\s?(Canada)?/u";
+
+    public function __construct()
+    {
+        $regexVietnameseCharacter = "a-z0-9A-Z_\x{00C0}-\x{00FF}\x{1EA0}-\x{1EFF}";
+        $groupLevelThree = "([$regexVietnameseCharacter\d?\s?\,?]*?)";
+        $groupLevelTwo = "([\!?\/?\(?\)?\"?\.?\'?\’?\-?$regexVietnameseCharacter+?\d?\s?]+)";
+        $groupLevelOne = "((SK|QC|ON|NS|NL|NB|MB|BC|AB|PE|YT|NU|NT|Québec|Saskatchewan|Quebec|Ontario|Nova Scotia|Newfoundland and Labrador|New Brunswick|Manitoba|British Columbia|Alberta|Prince Edward Island|Yukon|Nunavut|Northwest Territories)([\s\w]+)?)";
+
+        $this->regex = "/($groupLevelThree\s?\,?+$groupLevelTwo?)?\,?\s?$groupLevelOne\,?\s?(Canada)?/u";
+
+    }
 
     public function build($search = "")
     {
@@ -21,15 +32,14 @@ class LocationCanada
         return $result;
     }
 
-    public function searchData($address ,  $street , $nameLocation , $statePostal , $state , $postal)
+    public function searchData($address = ["Default"], $locationStreet = ["Default"],  $street = ["Default"], $nameLocation = ["Default"], $statePostal = ["Default"] , $state = ["Default"], $postal = ["Default"])
     {
         return DB::table('location_american')
-            ->orWhere('address',$address)
-            ->orWhere('address',$nameLocation)
-            ->orWhere('address',$street)
-            ->orWhere('name',$address)
-            ->orWhere('name',$state)
-            ->orWhere('code',$state)
+            ->orWhere('address',$address[0])
+            ->orWhere('address',$nameLocation[0])
+            ->orWhere('address',$street[0])
+            ->orWhere('name',$address[0])
+            ->orWhere('name',$state[0])
             ->get()
             ->toArray();
     }
